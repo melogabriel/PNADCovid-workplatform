@@ -102,7 +102,7 @@ Contribuições são bem-vindas! Siga os passos abaixo para colaborar:
    ```
 3.	Faça suas alterações e envie um pull request.
 
-Embora o foco desta análise tenha sido uma extração de trabalhadores por meio de plataformas digitais, a estrutura pode ser aproveitada para diversos outros tipos de análises alterando as variáveis analisadas e aplicando filtros diferentes consultando as variáveis no [Dicionário](https://github.com/melogabriel/PNADCovid_workplatform/edit/main/README.md#:~:text=Dicionario_PNAD_COVID_112020_20210726.xls).
+Embora o foco desta análise tenha sido uma extração de trabalhadores por meio de plataformas digitais, a estrutura pode ser aproveitada para diversos outros tipos de análises alterando as variáveis analisadas e aplicando filtros diferentes consultando as variáveis no [Dicionário](https://github.com/melogabriel/PNADCovid_workplatform/blob/main/Dicionario_PNAD_COVID_112020_20210726.xls).
 
 ## Licença
 
