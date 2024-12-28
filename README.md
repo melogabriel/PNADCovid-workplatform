@@ -106,6 +106,6 @@ Embora o foco desta análise tenha sido uma extração de trabalhadores por meio
 
 ## Licença
 
-Este projeto está licenciado sob a [MIT License](https://github.com/melogabriel/PNADCovid_workplatform/edit/main/README.md#:~:text=LICENSE).
+Este projeto está licenciado sob a [MIT License](https://github.com/melogabriel/PNADCovid_workplatform/blob/main/LICENSE).
 
 Se precisar de mais detalhes ou quiser alterações específicas, é só avisar!
