@@ -44,7 +44,9 @@ A análise utiliza os pacotes `survey` e `srvyr` para realizar cálculos de esti
 
 ### 5. **Visualização de Dados**
 
-Os gráficos são criados usando o pacote `ggplot2` e suas extensões (`ggrepel`, `gridExtra`) para melhorar a apresentação. As visualizações incluem:
+Um [Shiny Dashboard](https://gabrielmelo.shinyapps.io/PNADCovid-workplatform/) foi criado para visualização dos dados coletados. Os gráficos são criados usando o pacote `ggplot2` e suas extensões (`ggrepel`, `gridExtra`) para melhorar a apresentação. Por meio dele os dados também podem ser filtrados e baixados.
+
+As visualizações incluem:
 
 - Distribuição de idade e sexo dos trabalhadores.
 - Comparação de rendimentos por categorias de trabalho.
