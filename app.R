@@ -1,8 +1,10 @@
 # Load required libraries
 library(shiny)
+library(shinydashboard)
 library(ggplot2)
 library(dplyr)
 library(plotly)
+library(DT)
 
 # Load the dataset
 trabalhadoresAPP_2020 <- read.csv("trabalhadoresAPP_2020.csv", header = FALSE)
@@ -35,37 +37,86 @@ trabalhadoresAPP_2020 <- trabalhadoresAPP_2020 %>%
     )
   )
 
-# UI layout
-ui <- fluidPage(
-  titlePanel("Análise de Trabalhadores em Plataformas Digitais - 2020"),
+# UI layout using shinydashboard
+ui <- dashboardPage(
+  skin = "blue",  # Choose a skin color (blue, black, purple, green, red, yellow)
+  dashboardHeader(title = "Trabalhadores App 2020"),
   
-  sidebarLayout(
-    sidebarPanel(
-      h4("Filtros"),
-      selectInput("year", "Ano:", choices = c("Todos", unique(trabalhadoresAPP_2020$Year))),
-      selectInput("month", "Mês:", choices = c("Todos", 1:12)),
-      uiOutput("state_filter"),
-      uiOutput("occupation_filter"),
-      selectInput("age_group", "Faixa Etária:", choices = c("Todos", levels(trabalhadoresAPP_2020$`Faixa Etaria`))),
-      actionButton("reset", "Redefinir filtros"),
-      downloadButton("downloadData", "Baixar Dados Filtrados")
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Tabela", tabName = "table", icon = icon("table")),
+      menuItem("Gráficos", tabName = "graphs", icon = icon("chart-bar"))
     ),
-    
-    mainPanel(
-      tabsetPanel(
-        tabPanel("Tabela", dataTableOutput("data_table")),
-        tabPanel("Gráficos", 
-                 fluidRow(
-                   column(6, plotlyOutput("bar_chart")),
-                   column(6, plotlyOutput("pie_gender"))
-                 ),
-                 fluidRow(
-                   column(6, plotlyOutput("pie_race")),
-                   column(6, plotlyOutput("pie_education"))
-                 ),
-                 fluidRow(
-                   column(12, plotlyOutput("state_bar_chart"))
-                 )
+    hr(),
+    h4("Filtros", style = "padding-left: 15px;"),
+    selectInput("year", "Ano:", choices = c("Todos", unique(trabalhadoresAPP_2020$Year))),
+    selectInput("month", "Mês:", choices = c("Todos", 1:12)),
+    uiOutput("state_filter"),
+    uiOutput("occupation_filter"),
+    selectInput("age_group", "Faixa Etária:", choices = c("Todos", levels(trabalhadoresAPP_2020$`Faixa Etaria`))),
+    actionButton("reset", "Redefinir filtros", icon = icon("sync")),
+    downloadButton("downloadData", "Baixar Dados Filtrados", style = "margin-left: 15px; margin-top: 10px;")
+  ),
+  
+  dashboardBody(
+    tabItems(
+      # Table tab
+      tabItem(
+        tabName = "table",
+        fluidRow(
+          box(
+            title = "Tabela de Dados", 
+            width = 12, 
+            solidHeader = TRUE, 
+            status = "primary",
+            DTOutput("data_table")
+          )
+        )
+      ),
+      
+      # Graphs tab
+      tabItem(
+        tabName = "graphs",
+        fluidRow(
+          box(
+            title = "Distribuição por Faixa Etária e Tipo de Ocupação", 
+            width = 6, 
+            solidHeader = TRUE, 
+            status = "primary",
+            plotlyOutput("bar_chart")
+          ),
+          box(
+            title = "Distribuição por Sexo", 
+            width = 6, 
+            solidHeader = TRUE, 
+            status = "primary",
+            plotlyOutput("pie_gender")
+          )
+        ),
+        fluidRow(
+          box(
+            title = "Distribuição por Raça", 
+            width = 6, 
+            solidHeader = TRUE, 
+            status = "primary",
+            plotlyOutput("pie_race")
+          ),
+          box(
+            title = "Distribuição por Escolaridade", 
+            width = 6, 
+            solidHeader = TRUE, 
+            status = "primary",
+            plotlyOutput("pie_education")
+          )
+        ),
+        fluidRow(
+          box(
+            title = "Distribuição por Unidade da Federação", 
+            width = 12, 
+            solidHeader = TRUE, 
+            status = "primary",
+            plotlyOutput("state_bar_chart")
+          )
         )
       )
     )
@@ -95,7 +146,7 @@ server <- function(input, output, session) {
     data
   })
   
-  output$data_table <- renderDataTable({
+  output$data_table <- renderDT({
     datatable(filtered_data(), options = list(pageLength = 10), rownames = FALSE)
   })
   
