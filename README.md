@@ -2,7 +2,7 @@
 
 ## Descrição
 
-Este projeto realiza uma análise de trabalhadores em plataformas digitais utilizando dados da **PNAD COVID-19**, fornecidos pelo IBGE. A análise é implementada em R e utiliza pacotes específicos para manipulação e visualização de dados.
+Este projeto realiza uma análise de trabalhadores em plataformas digitais utilizando dados da **PNAD COVID-19**, fornecidos pelo IBGE. Foi desenvolvido um [dashboard interativo](https://gabrielmelo.shinyapps.io/PNADCovid-workplatform/) desenvolvido em R utilizando o pacote Shiny. O objetivo é analisar dados de trabalhadores em plataformas digitais no ano de 2020, permitindo a visualização e filtragem dos dados por meio de uma interface amigável.
 
 ### Objetivos
 
@@ -44,53 +44,52 @@ A análise utiliza os pacotes `survey` e `srvyr` para realizar cálculos de esti
 
 ### 5. **Visualização de Dados**
 
-Os gráficos são criados usando o pacote `ggplot2` e suas extensões (`ggrepel`, `gridExtra`) para melhorar a apresentação. As visualizações incluem:
+- **Filtros Interativos**: Permite filtrar os dados por ano, mês, unidade da federação (UF), tipo de ocupação, faixa etária, sexo, cor ou raça, escolaridade, carteira assinada, função, carga horária semanal habitual, rendimentos habituais e contribuição para o INSS.
+- **Visualizações Gráficas**: Inclui gráficos de barras e gráficos de pizza para visualizar a distribuição dos dados.
+- **Tabela Interativa**: Exibe os dados filtrados em uma tabela com paginação e busca.
+- **Download de Dados**: Permite o download dos dados filtrados em formato CSV.
 
-- Distribuição de idade e sexo dos trabalhadores.
-- Comparação de rendimentos por categorias de trabalho.
-- Evolução do número de trabalhadores ao longo do tempo.
-
-## Requisitos do Sistema
-
-- R (versão 4.0 ou superior)
-- Pacotes R necessários:
-  - `tidyverse`
-  - `PNADcIBGE`
-  - `COVIDIBGE`
-  - `knitr`
-  - `gridExtra`
-  - `ggrepel`
-  - `survey`
-  - `zoo`
-  - `scales`
-  - `srvyr`
 
 ## Instalação
 
-1. Clone o repositório:
+Para executar este projeto, siga os passos abaixo:
+
+1. **Instale o R**: Certifique-se de que o R está instalado no seu sistema. Você pode baixá-lo em (https://cran.r-project.org/).
+2. **Instale o RStudio (opcional)**: Recomenda-se o uso do RStudio para uma melhor experiência de desenvolvimento. Baixe-o em (https://www.rstudio.com/products/rstudio/download/).
+3. **Instale os Pacotes Necessários**: No console do R, execute os seguintes comandos para instalar os pacotes necessários:
+
+   ```bash
+    install.packages("shiny")
+    install.packages("shinydashboard")
+    install.packages("ggplot2")
+    install.packages("dplyr")
+    install.packages("plotly")
+    install.packages("DT")
+    ```
+
+4. **Clone o repositório**:
 
    ```bash
    git clone https://github.com/seu-usuario/PNADCovid_TrabalhadoresAPP.git
    cd PNADCovid_TrabalhadoresAPP
    ```
-
-2.	Instale os pacotes R necessários:
-   
+5. **Execute o Projeto**: Navegue até o diretório do projeto e execute o arquivo app.R.
     ```bash
-  	install.packages(c("tidyverse", "PNADcIBGE", "COVIDIBGE", "knitr", "gridExtra", "ggrepel", "survey", "zoo", "scales", "srvyr"))
-    ```
+   shiny::runApp("caminho/para/o/projeto")
+   ```
+
+## Estrutura do Projeto
+
+- **app.R**: Contém o código principal do aplicativo Shiny, incluindo a interface do usuário (UI) e a lógica do servidor (server).
+- **trabalhadoresAPP_2020.csv**: Arquivo de dados utilizado no projeto. Certifique-se de que este arquivo está no mesmo diretório que o app.R.
 
 ## Uso
 
-1.	Abra o arquivo PNADCovid_TrabalhadoresAPP.Rmd no RStudio ou outro editor de R Markdown.
-2.	Execute as células para processar e analisar os dados.
-3.	Visualize os resultados no relatório gerado em HTML.
+1. **Filtros**: Utilize os filtros no painel lateral para selecionar os critérios desejados.
+2. **Tabela**: Visualize os dados filtrados na aba "Tabela".
+3. **Gráficos**: Explore as visualizações gráficas na aba "Gráficos".
+4. **Download**: Baixe os dados filtrados clicando no botão "Baixar Dados Filtrados".
 
-## Estrutura do Código
-
-•	Importação de bibliotecas e dados.
-•	Manipulação de dados usando tidyverse e survey.
-•	Visualização de dados com gráficos do ggplot2.
 
 ## Contribuição
 
@@ -109,3 +108,5 @@ Embora o foco desta análise tenha sido uma extração de trabalhadores por meio
 Este projeto está licenciado sob a [MIT License](https://github.com/melogabriel/PNADCovid_workplatform/blob/main/LICENSE).
 
 Se precisar de mais detalhes ou quiser alterações específicas, é só avisar!
+
+*Este projeto foi desenvolvido para auxiliar na pesquisa e análise de dados da minha dissertação de mestrado.*
