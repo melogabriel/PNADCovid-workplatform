@@ -90,6 +90,8 @@ Para executar este projeto, siga os passos abaixo:
 3. **Gráficos**: Explore as visualizações gráficas na aba "Gráficos".
 4. **Download**: Baixe os dados filtrados clicando no botão "Baixar Dados Filtrados".
 
+![](shiny-dashboard-pnadcovid.gif)
+
 
 ## Contribuição
 
