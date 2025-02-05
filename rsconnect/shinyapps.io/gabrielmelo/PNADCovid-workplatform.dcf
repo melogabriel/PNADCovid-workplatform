@@ -5,7 +5,7 @@ account: gabrielmelo
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 13838991
-bundleId: 9719653
+bundleId: 9755423
 url: https://gabrielmelo.shinyapps.io/PNADCovid-workplatform/
 version: 1
 asMultiple: FALSE

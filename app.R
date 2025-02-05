@@ -1,4 +1,4 @@
-# Load required libraries
+# Carregar pacotes necessários
 library(shiny)
 library(shinydashboard)
 library(ggplot2)
@@ -6,14 +6,11 @@ library(dplyr)
 library(plotly)
 library(DT)
 
-# Load the dataset
+# Carregar o dataset
 trabalhadoresAPP_2020 <- read.csv("trabalhadoresAPP_2020.csv", header = FALSE)
 
-# Remove the first line
-trabalhadoresAPP_2020 <- trabalhadoresAPP_2020[-1, ]
-
-# Process the dataset
-trabalhadoresAPP_2020 <- trabalhadoresAPP_2020 %>%
+# Remover a primeira linha e renomear colunas
+trabalhadoresAPP_2020 <- trabalhadoresAPP_2020[-1, ] %>%
   select(Year = V1, 
          Month = V2, 
          UF = V3, 
@@ -29,6 +26,7 @@ trabalhadoresAPP_2020 <- trabalhadoresAPP_2020 %>%
          `Contribui para o INSS` = V23) %>%
   mutate(
     Idade = as.numeric(Idade),
+    `Rendimentos habituais` = as.numeric(as.character(`Rendimentos habituais`)),  # Garantir tipo numérico
     `Faixa Etaria` = cut(
       Idade,
       breaks = c(-Inf, 17, 29, 39, 49, 59, 69, Inf),
@@ -37,9 +35,10 @@ trabalhadoresAPP_2020 <- trabalhadoresAPP_2020 %>%
     )
   )
 
-# UI layout using shinydashboard
+# UI - Interface gráfica
+# UI layout (modificado)
 ui <- dashboardPage(
-  skin = "blue",  # Choose a skin color (blue, black, purple, green, red, yellow)
+  skin = "blue",  
   dashboardHeader(title = "Trabalhadores App 2020"),
   
   dashboardSidebar(
@@ -74,7 +73,7 @@ ui <- dashboardPage(
         )
       ),
       
-      # Graphs tab
+      # Graphs tab (modificado)
       tabItem(
         tabName = "graphs",
         fluidRow(
@@ -90,7 +89,7 @@ ui <- dashboardPage(
             width = 6, 
             solidHeader = TRUE, 
             status = "primary",
-            plotlyOutput("pie_gender")
+            plotlyOutput("bar_gender")
           )
         ),
         fluidRow(
@@ -99,14 +98,14 @@ ui <- dashboardPage(
             width = 6, 
             solidHeader = TRUE, 
             status = "primary",
-            plotlyOutput("pie_race")
+            plotlyOutput("bar_race")
           ),
           box(
             title = "Distribuição por Escolaridade", 
             width = 6, 
             solidHeader = TRUE, 
             status = "primary",
-            plotlyOutput("pie_education")
+            plotlyOutput("bar_education")
           )
         ),
         fluidRow(
@@ -117,13 +116,45 @@ ui <- dashboardPage(
             status = "primary",
             plotlyOutput("state_bar_chart")
           )
+        ),
+        fluidRow(
+          box(
+            title = "Distribuição por Rendimentos Habitual (Faixa Etária)", 
+            width = 6, 
+            solidHeader = TRUE, 
+            status = "primary",
+            plotlyOutput("bar_income_age")
+          ),
+          box(
+            title = "Distribuição por Rendimentos Habitual (Sexo)", 
+            width = 6, 
+            solidHeader = TRUE, 
+            status = "primary",
+            plotlyOutput("bar_income_gender")
+          )
+        ),
+        fluidRow(
+          box(
+            title = "Distribuição por Rendimentos Habitual (Raça)", 
+            width = 6, 
+            solidHeader = TRUE, 
+            status = "primary",
+            plotlyOutput("bar_income_race")
+          ),
+          box(
+            title = "Distribuição por Rendimentos Habitual (Escolaridade)", 
+            width = 6, 
+            solidHeader = TRUE, 
+            status = "primary",
+            plotlyOutput("bar_income_education")
+          )
         )
       )
     )
   )
 )
 
-# Server logic
+# Server logic (modificado)
 server <- function(input, output, session) {
   
   output$state_filter <- renderUI({
@@ -150,6 +181,7 @@ server <- function(input, output, session) {
     datatable(filtered_data(), options = list(pageLength = 10), rownames = FALSE)
   })
   
+  # Gráfico de Faixa Etária e Tipo de Ocupação
   output$bar_chart <- renderPlotly({
     data <- filtered_data()
     gg <- ggplot(data, aes(x = `Faixa Etaria`, fill = `Tipo de Ocupacao`)) +
@@ -159,24 +191,37 @@ server <- function(input, output, session) {
     ggplotly(gg)
   })
   
-  output$pie_gender <- renderPlotly({
+  # Gráfico de distribuição por Sexo
+  output$bar_gender <- renderPlotly({
     data <- filtered_data()
-    plot_ly(data, labels = ~Sexo, type = "pie", textinfo = "label+percent", insidetextorientation = "radial") %>%
-      layout(title = "Distribuição por Sexo")
+    gg <- ggplot(data, aes(x = Sexo, fill = Sexo)) +
+      geom_bar() +
+      theme_minimal() +
+      labs(title = "Distribuição por Sexo", x = "Sexo", y = "Contagem")
+    ggplotly(gg)
   })
   
-  output$pie_race <- renderPlotly({
+  # Gráfico de distribuição por Raça
+  output$bar_race <- renderPlotly({
     data <- filtered_data()
-    plot_ly(data, labels = ~`Cor ou Raca`, type = "pie", textinfo = "label+percent", insidetextorientation = "radial") %>%
-      layout(title = "Distribuição por Raça")
+    gg <- ggplot(data, aes(x = `Cor ou Raca`, fill = `Cor ou Raca`)) +
+      geom_bar() +
+      theme_minimal() +
+      labs(title = "Distribuição por Raça", x = "Raça", y = "Contagem")
+    ggplotly(gg)
   })
   
-  output$pie_education <- renderPlotly({
+  # Gráfico de distribuição por Escolaridade
+  output$bar_education <- renderPlotly({
     data <- filtered_data()
-    plot_ly(data, labels = ~Escolaridade, type = "pie", textinfo = "label+percent", insidetextorientation = "radial") %>%
-      layout(title = "Distribuição por Escolaridade")
+    gg <- ggplot(data, aes(x = Escolaridade, fill = Escolaridade)) +
+      geom_bar() +
+      theme_minimal() +
+      labs(title = "Distribuição por Escolaridade", x = "Escolaridade", y = "Contagem")
+    ggplotly(gg)
   })
   
+  # Gráfico de distribuição por Unidade da Federação
   output$state_bar_chart <- renderPlotly({
     data <- filtered_data() %>% group_by(UF) %>% summarise(Count = n())
     gg <- ggplot(data, aes(x = reorder(UF, Count), y = Count)) +
@@ -187,6 +232,57 @@ server <- function(input, output, session) {
     ggplotly(gg)
   })
   
+  # Gráfico de distribuição por "Rendimentos Habitual" e Faixa Etária
+  output$bar_income_age <- renderPlotly({
+    data <- filtered_data()
+    gg <- ggplot(data, aes(x = `Faixa Etaria`, y = `Rendimentos habituais`, fill = `Faixa Etaria`)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      theme_minimal() +
+      labs(title = "Distribuição por Rendimentos Habitual e Faixa Etária", x = "Faixa Etária", y = "Rendimentos Habitual")
+    ggplotly(gg)
+  })
+  
+  # Gráfico de distribuição por "Rendimentos Habitual" e Sexo
+  output$bar_income_gender <- renderPlotly({
+    data <- filtered_data()
+    gg <- ggplot(data, aes(x = Sexo, y = `Rendimentos habituais`, fill = Sexo)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      theme_minimal() +
+      labs(title = "Distribuição por Rendimentos Habitual e Sexo", x = "Sexo", y = "Rendimentos Habitual")
+    ggplotly(gg)
+  })
+  
+  # Gráfico de distribuição por "Rendimentos Habitual" e Raça
+  output$bar_income_race <- renderPlotly({
+    data <- filtered_data()
+    gg <- ggplot(data, aes(x = `Cor ou Raca`, y = `Rendimentos habituais`, fill = `Cor ou Raca`)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      theme_minimal() +
+      labs(title = "Distribuição por Rendimentos Habitual e Raça", x = "Raça", y = "Rendimentos Habitual")
+    ggplotly(gg)
+  })
+  
+  # Gráfico de distribuição por "Rendimentos Habitual" e Escolaridade
+  output$bar_income_education <- renderPlotly({
+    data <- filtered_data()
+    gg <- ggplot(data, aes(x = Escolaridade, y = `Rendimentos habituais`, fill = Escolaridade)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      theme_minimal() +
+      labs(title = "Distribuição por Rendimentos Habitual e Escolaridade", x = "Escolaridade", y = "Rendimentos Habitual")
+    ggplotly(gg)
+  })
+  
+  # Download de dados filtrados
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste("dados_filtrados.csv")
+    },
+    content = function(file) {
+      write.csv(filtered_data(), file)
+    }
+  )
+  
+  # Resetar filtros
   observeEvent(input$reset, {
     updateSelectInput(session, "year", selected = "Todos")
     updateSelectInput(session, "month", selected = "Todos")
@@ -194,15 +290,7 @@ server <- function(input, output, session) {
     updateSelectInput(session, "occupation", selected = "Todos")
     updateSelectInput(session, "age_group", selected = "Todos")
   })
-  
-  output$downloadData <- downloadHandler(
-    filename = function() {
-      paste("filtered_data_", Sys.Date(), ".csv", sep = "")
-    },
-    content = function(file) {
-      write.csv(filtered_data(), file, row.names = FALSE)
-    }
-  )
 }
 
+# Run the application 
 shinyApp(ui = ui, server = server)

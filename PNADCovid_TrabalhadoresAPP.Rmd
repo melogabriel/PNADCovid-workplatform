@@ -307,4 +307,3 @@ write.csv(trabalhadoresAPP_2020, "trabalhadoresAPP_2020.csv", row.names = FALSE)
 
 
 ```
-
