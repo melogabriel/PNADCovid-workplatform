@@ -60,7 +60,7 @@ O Shiny Dashboard oferece uma interface interativa que permite aos usuários:
 - Visualizar gráficos dinâmicos com atualizações em tempo real.
 - Acessar insights detalhados sem a necessidade de executar o código localmente.
 
-![](shiny-dashboard.gif)
+![](shiny-dashboard-pnadcovid.gif)
 
 ## Requisitos do Sistema
 
