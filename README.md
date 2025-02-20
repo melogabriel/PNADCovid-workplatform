@@ -4,6 +4,8 @@
 
 Este projeto realiza uma análise de trabalhadores em plataformas digitais utilizando dados da **PNAD COVID-19**, fornecidos pelo IBGE. A análise é implementada em R e utiliza pacotes específicos para manipulação e visualização de dados.
 
+Além disso, foi desenvolvido um [Shiny Dashboard](https://gabrielmelo.shinyapps.io/PNADCovid-workplatform/) interativo que permite explorar os resultados da análise de forma dinâmica.
+
 ### Objetivos
 
 - Analisar o impacto da pandemia de COVID-19 no trabalho em plataformas digitais.
@@ -49,6 +51,16 @@ Os gráficos são criados usando o pacote `ggplot2` e suas extensões (`ggrepel`
 - Distribuição de idade e sexo dos trabalhadores.
 - Comparação de rendimentos por categorias de trabalho.
 - Evolução do número de trabalhadores ao longo do tempo.
+
+### 6. **Shiny Dashboard interativo**
+
+O Shiny Dashboard oferece uma interface interativa que permite aos usuários:
+
+- Explorar os dados por filtros como região, faixa etária e tipo de trabalho.
+- Visualizar gráficos dinâmicos com atualizações em tempo real.
+- Acessar insights detalhados sem a necessidade de executar o código localmente.
+
+![](shiny-dashboard.gif)
 
 ## Requisitos do Sistema
 
