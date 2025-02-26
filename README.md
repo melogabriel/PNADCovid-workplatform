@@ -118,6 +118,8 @@ Embora o foco desta análise tenha sido uma extração de trabalhadores por meio
 
 ## Licença
 
+Este projeto foi desenvolvido como parte da análise de dados desenvolvida na dissertação de mestrado do autor. O resultado da pesquisa pode ser consultado [aqui](https://app.uff.br/riuff/bitstream/handle/1/36524/Dissertac%cc%a7a%cc%83o%20Gabriel%20Melo.pdf?sequence=1&isAllowed=y).
+
 Este projeto está licenciado sob a [MIT License](https://github.com/melogabriel/PNADCovid_workplatform/blob/main/LICENSE).
 
 Se precisar de mais detalhes ou quiser alterações específicas, é só avisar!
