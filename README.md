@@ -120,6 +120,8 @@ Embora o foco desta análise tenha sido uma extração de trabalhadores por meio
 
 Este projeto foi desenvolvido como parte da análise de dados desenvolvida na dissertação de mestrado do autor. O resultado da pesquisa pode ser consultado [aqui](https://app.uff.br/riuff/bitstream/handle/1/36524/Dissertac%cc%a7a%cc%83o%20Gabriel%20Melo.pdf?sequence=1&isAllowed=y).
 
+> MELO, Gabriel Coutinho. Plataformização do trabalho no Brasil: uma análise das suas origens e condicionantes. 2024. 103 f. Dissertação (Mestrado em Administração) - Programa de Pós-Graduação em Administração, Faculdade de Administração e Ciências Contábeis, Universidade Federal Fluminense, Niterói, 2024.
+
 Este projeto está licenciado sob a [MIT License](https://github.com/melogabriel/PNADCovid_workplatform/blob/main/LICENSE).
 
 Se precisar de mais detalhes ou quiser alterações específicas, é só avisar!
