@@ -122,7 +122,8 @@ The consolidated sample included **19,896 platform-based workers**, segmented as
 **Demographic Profile:**
 
 - 94.57% male
-![image](https://github.com/user-attachments/assets/ad554a33-1660-4f42-bd6b-d35896617bf6)
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/7a25a134-17d8-449c-94e1-1ae4114a8ed0" />
+
 
 - 62.1% self-identified as Black or Brown (pardo or preto)
 - Average age: 39.8 years
