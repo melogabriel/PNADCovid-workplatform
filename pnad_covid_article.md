@@ -29,7 +29,7 @@ The analysis focused on workers who reported being **self-employed** or working 
 
 ### Data Import and Processing
 
-The PNAD COVID-19 microdata was imported using the R package [`PNADcIBGE`](https://cran.r-project.org/web/packages/PNADcIBGE/index.html), with additional variables including:
+The PNAD COVID-19 microdata was imported using the R package [`PNADcIBGE`](https://cran.r-project.org/web/packages/PNADcIBGE/index.html), variables including:
 
 - Age, gender, race, and education level.
 - Hours worked per week and monthly earnings.
@@ -60,6 +60,8 @@ The PNAD COVID-19 dataset contains an extensive list of variables. To focus the 
 The filtering steps applied to the raw PNAD COVID-19 microdata were as follows:
 
 1. **Timeframe Selection:** Only records from **May to November 2020** were included, matching the period when the PNAD COVID-19 was conducted monthly by IBGE.
+
+Timeframe Selection example:
 ```r
 pnad_covid_may = get_covid(year=2020, month=5, vars=c("UF", "A002", "A003", "A004","A005", "C007", "C007B", "C007C", "C008", "C009", "C01012", "C011A12", "C014"), design=FALSE, labels=TRUE) 
 ```
@@ -70,8 +72,10 @@ pnad_covid_may = get_covid(year=2020, month=5, vars=c("UF", "A002", "A003", "A00
    - Declared themselves as **self-employed** or **private-sector employees without a formal contract.**
    - Delivery workers were selected by combining responses that indicated "Motoboy" and "Delivery of goods (restaurants, pharmacies, shops, Uber Eats, iFood, Rappi, etc.)."
    - Drivers were selected based on the response option "Driver (app-based, taxi, van, mototaxi, bus)."
+
+Workers App status filter example:
 ```r
-trabalhadoresAPP_may <- filter(pnad_covid_may, 
+workersAPP_may <- filter(pnad_covid_may, 
                                 C007 == 'Conta própria' | C007 == 'Empregado do setor privado',
                                 C007B == 'Não' | is.na(C007B),
                                 C007C == 'Motoboy,' | C007C == 'Entregador de mercadorias (de restaurante, de farmácia, de loja, Uber Eats, IFood, Rappy etc.)' | C007C == 'Motorista (de aplicativo, de taxi, de van, de mototáxi, de ônibus)')
@@ -82,10 +86,11 @@ trabalhadoresAPP_may <- filter(pnad_covid_may,
    - Categorical variables such as race and education level were recoded using labels from the PNAD COVID-19 dictionary to improve readability.
    - Derived variables were created, such as a binary flag for INSS contribution and calculated averages for earnings and working hours.
 
+Variables naming example:
 ```r
 new_names <- c("UF" = "UF", "A002" = "Idade", "A003" = "Sexo", "A004" = "Cor ou Raça", "A005" = "Escolaridade", "C007" = "Tipo de Ocupação", "C007B" = "Carteira Assinada", "C007C" = "Tipo/Cargo/Função", "C008" = "Carga horária semanal habitual", "C009" = "Carga horária semanal", "C01012" = "Rendimentos", "C011A12" = "Rendimentos habituais", "C014" = "Contribui para o INSS")
 
-names(workersAPP_2020) <- new_names[names(workersAPP_2020)]
+names(workersAPP_may) <- new_names[names(workersAPP_may)]
 ```
 
 ### Statistical Analysis
@@ -100,7 +105,7 @@ To make the results accessible, the project also includes a [**Shiny Dashboard**
 - View dynamic charts that update in real time.
 - Explore insights without needing to execute code locally.
 
-![](shiny-dashboard-pnadcovid-1.gif)
+![](shiny-dashboard-pnadcovid.gif)
 
 ---
 
@@ -112,9 +117,13 @@ The consolidated sample included **19,896 platform-based workers**, segmented as
 - 4,347 Delivery Workers (Uber Eats, iFood, Rappi, etc.)
 - 1,960 Motoboys
 
+<img width="912" alt="image" src="https://github.com/user-attachments/assets/11368528-c75f-49d4-b656-01965dc1a711" />
+
 **Demographic Profile:**
 
-- 94.5% male
+- 94.57% male
+![image](https://github.com/user-attachments/assets/ad554a33-1660-4f42-bd6b-d35896617bf6)
+
 - 62.1% self-identified as Black or Brown (pardo or preto)
 - Average age: 39.8 years
 - 84% with, at most, a high school education
@@ -122,7 +131,7 @@ The consolidated sample included **19,896 platform-based workers**, segmented as
 **Work Conditions:**
 
 - Average workweek: 42.3 hours
-- Average monthly income: R\$1,162.24
+- Average monthly income: R$1,162.24
 - 74.5% did not contribute to the INSS
 
 These figures highlight the **informal, male-dominated, and racially marked nature of platform-based work** in Brazil. Most workers in this sector are not covered by social protections and work under precarious conditions.
