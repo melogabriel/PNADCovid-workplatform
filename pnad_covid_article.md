@@ -179,5 +179,5 @@ This project is part of the author’s master's dissertation:
 
 ## Final Thoughts
 
-By combining public microdata, statistical rigor, and open-source tools, this project provides a detailed look into the precarious reality of platform-based work in Brazil. The approach is fully reproducible and can serve as a foundation for future research into labor market dynamics and the gig economy.
+By combining public microdata, statistical rigor and open-source tools, this project provides a detailed look into the precarious reality of platform-based work in Brazil. The approach is fully reproducible and can serve as a foundation for future research into labor market dynamics and the gig economy.In this way, it hopes to contribute with ways of obtaining information about this new form of work that is still little known in terms of its dimensions and social impacts.
 
