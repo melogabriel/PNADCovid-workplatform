@@ -127,7 +127,9 @@ The consolidated sample included **19,896 platform-based workers**, segmented as
 - 62.1% self-identified as Black or Brown (pardo or preto)
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/132db794-fa22-410a-a8f8-d966334dd7ec" />
 
-- Average age: 39.8 years
+- Average age: 40.02 years
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/05318545-1d9d-4615-b10c-d74010a0a2d6" />
+  
 - 84% with, at most, a high school education
 
 **Work Conditions:**
