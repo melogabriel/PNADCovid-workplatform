@@ -1,0 +1,136 @@
+---
+title: "Analysis of Age Distribution of Platform Workers"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+    theme: united
+---
+
+### Introduction
+
+This notebook analyzes the age distribution of platform workers based on the `trabalhadoresAPP_2020` dataset. A histogram will be generated to visualize the frequency of ages and a boxplot for a statistical summary.
+
+### 1. Load Libraries
+
+First, we load the necessary packages for data analysis and visualization.
+
+```{r setup, message=FALSE, warning=FALSE}
+library(tidyverse) # Contains ggplot2 for charts and dplyr for manipulation
+library(gridExtra) # Useful for arranging multiple charts in a single view
+```
+
+### 2. Data Preparation
+
+In this step, the `trabalhadoresAPP_2020` dataframe is prepared for analysis. We remove any `NA` values in the `Idade` column and ensure it is a numeric type. Then, we calculate the average age of the sample.
+
+```{r data_preparation}
+# This code assumes that 'trabalhadoresAPP_2020' already exists in the environment.
+
+# Filter data, ensure the 'Idade' column is numeric
+idade_data <- trabalhadoresAPP_2020 %>%
+  filter(!is.na(Idade)) %>%
+  mutate(Idade = as.numeric(Idade))
+
+# Calculate the average age for use in the charts
+idade_media <- mean(idade_data$Idade, na.rm = TRUE)
+
+# Display the calculated average age
+print(paste("The average age of the sample is:", round(idade_media, 2), "years."))
+```
+
+### 3. Chart 1: Histogram of Age Distribution
+
+The histogram below shows the number of workers in each age group. The visualization has been enhanced according to the BBC R Cookbook's best practices for clarity and impact. A highlighted band has been added to emphasize the primary age group between 30 and 40 years old.
+
+```{r histogram_plot, fig.width=10, fig.height=6}
+histograma_idade <- ggplot(idade_data, aes(x = Idade)) +
+  # Add a rectangle to highlight the 30-40 age band
+  geom_rect(
+    aes(xmin = 30, xmax = 40, ymin = -Inf, ymax = Inf),
+    fill = "#e76f51", alpha = 0.02 # Using a low alpha to make it a subtle background highlight
+  ) +
+  geom_histogram(binwidth = 1, fill = "#1380A1", color = "white", alpha = 0.9) +
+  geom_vline(
+    aes(xintercept = idade_media),
+    color = "#e76f51",
+    linetype = "dashed",
+    size = 1
+  ) +
+  geom_hline(yintercept = 0, size = 1, colour = "#333333") + # Add a base line for the X-axis
+  annotate(
+    "text",
+    x = idade_media + 10,
+    y = 700,
+    label = paste("Average Age:", round(idade_media, 1), "years"),
+    color = "#e76f51",
+    size = 4.5,
+    fontface = "bold"
+  ) +
+  # Annotation for the highlighted band
+  annotate(
+    "text",
+    x = 52,
+    y = 750,
+    label = "Main age group: 30-40 years",
+    color = "#e76f51",
+    size = 4.5,
+    fontface = "bold"
+  ) +
+  labs(
+    title = "Distribution of Platform-based workers by Age",
+    subtitle = "Most of the workers are between 30 and 40 years old.",
+    x = "Age (years)",
+    y = "Number of Workers",
+    caption = "Source: PNAD-COVID19 Data (IBGE), 2020."
+  ) +
+  # Add scale for x-axis to control the labels
+  scale_x_continuous(breaks = seq(0, 90, by = 10)) +
+  # Theme inspired by the BBC R Cookbook for a clean and professional look
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(hjust = 0, size = 20, face = "bold", color = "#222222"),
+    plot.subtitle = element_text(hjust = 0, size = 16, margin = margin(t = 5, b = 20), color = "grey40"),
+    plot.caption = element_text(hjust = 1, size = 12, color = "grey40", face = "italic"),
+    panel.background = element_blank(),
+    panel.grid.major.y = element_line(color = "#cbcbcb", linetype = "dashed"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text = element_text(size = 12, color = "#333333"),
+    axis.title = element_text(size = 14, face = "bold"),
+    axis.title.x = element_text(margin = margin(t = 10))
+  )
+
+# Display the chart
+print(histograma_idade)
+```
+
+### 4. Chart 2: Box Plot for Statistical Summary
+
+The box plot provides a statistical summary of the age distribution, showing the median, quartiles, and outliers.
+
+```{r boxplot_plot, fig.width=8, fig.height=6}
+boxplot_idade <- ggplot(idade_data, aes(x = "", y = Idade)) +
+  geom_boxplot(fill = "#009E73", alpha = 0.7, width = 0.5) +
+  geom_jitter(color = "black", alpha = 0.1, width = 0.15) +
+  labs(
+    title = "Statistical Summary of Age",
+    subtitle = "Median, quartiles, and outliers",
+    x = "",
+    y = "Age (years)"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+# Display the chart
+print(boxplot_idade)
+```
+
+### 5. Combined Visualization (Optional)
+
+For a direct comparison, the two charts can be displayed side-by-side.
+
+```{r combined_plot, fig.width=12, fig.height=6}
+# grid.arrange(histograma_idade, boxplot_idade, ncol = 2)
