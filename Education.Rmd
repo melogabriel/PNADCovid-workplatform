@@ -1,0 +1,105 @@
+---
+title: "Analysis of Education Level of Platform Workers"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+    theme: united
+---
+
+### Introduction
+
+This notebook analyzes the education level of platform workers based on the `trabalhadoresAPP_2020` dataset. A waffle chart will be generated to visualize the composition of the workforce across different educational backgrounds.
+
+### 1. Load Libraries
+
+First, we load the necessary packages for data analysis and visualization. `waffle` is added to create the waffle chart.
+
+```{r setup, message=FALSE, warning=FALSE}
+library(tidyverse) # Contains ggplot2 for charts and dplyr for manipulation
+library(RColorBrewer) # For color palettes
+library(waffle)       # For creating waffle charts
+```
+
+### 2. Data Preparation
+
+In this step, the `trabalhadoresAPP_2020` dataframe is prepared for analysis. The education levels are translated to English. For the waffle chart, we need a named vector of integer values. The names of the vector are formatted to include the percentage, which will be displayed in the legend.
+
+```{r data_preparation_education}
+# This code assumes that 'trabalhadoresAPP_2020' already exists in the environment.
+
+# Check if the 'Escolaridade' column exists
+if (!"Escolaridade" %in% names(trabalhadoresAPP_2020)) {
+  stop("ERROR: The 'Escolaridade' column was not found in the dataframe.")
+}
+
+# Process and translate education data for the waffle chart
+education_data <- trabalhadoresAPP_2020 %>%
+  filter(!is.na(Escolaridade) & Escolaridade != "Ignorado") %>%
+  # Translate education levels to English
+  mutate(
+    Education_Level = case_when(
+      Escolaridade == "Médio completo" ~ "High school complete",
+      Escolaridade == "Fundamental incompleto" ~ "Incomplete middle school",
+      Escolaridade == "Fundamental completa" ~ "Middle school complete",
+      Escolaridade == "Médio incompleto" ~ "Incomplete high school",
+      Escolaridade == "Superior completo" ~ "Higher education complete",
+      Escolaridade == "Superior incompleto" ~ "Incomplete higher education",
+      Escolaridade == "Sem instrução" ~ "Illiterate",
+      Escolaridade == "Pós-graduação, mestrado ou doutorado" ~ "Post-graduate degree",
+      TRUE ~ as.character(Escolaridade) # Fallback for any other categories
+    )
+  ) %>%
+  count(Education_Level, name = "count") %>%
+  # Arrange from largest to smallest
+  arrange(desc(count))
+
+# Create a named vector where values are percentages rounded to the nearest integer
+total_count <- sum(education_data$count)
+waffle_vector <- round((education_data$count / total_count) * 100)
+
+# Due to rounding, the sum might not be exactly 100. We adjust the largest category to fix this.
+diff <- 100 - sum(waffle_vector)
+waffle_vector[1] <- waffle_vector[1] + diff
+
+# Create new names for the legend that include the percentage values
+names(waffle_vector) <- paste(education_data$Education_Level, paste0("(", waffle_vector, "%)"))
+
+# Display the prepared vector
+print("Data vector for waffle chart (values are percentages and should sum to 100):")
+print(waffle_vector)
+```
+
+### 3. Chart: Waffle Chart of Education Levels
+
+The waffle chart below visualizes the workforce composition, where each square represents 1% of the workers. This provides an intuitive way to see the proportion of each education level. The chart is oriented horizontally for readability.
+
+```{r barchart_plot, fig.width=12, fig.height=8}
+# Create the waffle chart
+# The waffle function is part of the 'waffle' package.
+education_chart <- waffle(
+  waffle_vector,
+  rows = 5,           # Reduced number of rows for a horizontal layout
+  size = 2,         # The size of the squares
+  flip = FALSE,        # Flips the chart to be horizontal
+  colors = RColorBrewer::brewer.pal(length(waffle_vector), "Paired"), # Color palette
+  legend_pos = "top" # Position of the legend
+) +
+# Add titles and annotations using ggplot2's labs function
+labs(
+  title = "Workforce Composition by Education Level",
+  subtitle = "62% of workers have, at most, a complete high school education.",
+  x = "1 square = 1% of the workforce",
+  caption = "Source: PNAD-COVID19 Data (IBGE), 2020."
+) +
+theme(
+  plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+  plot.subtitle = element_text(hjust = 0.5, size = 16, margin = margin(b = 20)),
+  plot.caption = element_text(hjust = 1, face = "italic"),
+  legend.text = element_text(size = 11)
+)
+
+
+# Display the chart
+print(education_chart)
+```
