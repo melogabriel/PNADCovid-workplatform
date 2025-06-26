@@ -130,7 +130,8 @@ The consolidated sample included **19,896 platform-based workers**, segmented as
 - Average age: 40.02 years
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/05318545-1d9d-4615-b10c-d74010a0a2d6" />
   
-- 84% with, at most, a high school education
+- 62% of workers have, at most, a complete high school education
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/f2acd8cb-e8bf-4276-a78a-7506174ab2fb" />
 
 **Work Conditions:**
 
