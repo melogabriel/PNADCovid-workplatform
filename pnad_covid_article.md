@@ -136,6 +136,7 @@ The consolidated sample included **19,896 platform-based workers**, segmented as
 **Work Conditions:**
 
 - Average workweek: 42.3 hours
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/77ca6a45-7253-4899-8d8d-f3d0c9c0c49a" />
 - Average monthly income: R$1,162.24
 - 74.5% did not contribute to the INSS
 
