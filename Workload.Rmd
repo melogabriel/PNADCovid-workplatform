@@ -1,0 +1,115 @@
+---
+title: "Analysis of Weekly Workload of Platform Workers"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+    theme: united
+---
+
+### Introduction
+
+This notebook analyzes the habitual weekly workload of platform workers based on the `trabalhadoresAPP_2020` dataset. A histogram will be generated to visualize the distribution of work hours.
+
+### 1. Load Libraries
+
+First, we load the necessary packages for data analysis and visualization.
+
+```{r setup, message=FALSE, warning=FALSE}
+library(tidyverse) # Contains ggplot2 for charts and dplyr for manipulation
+```
+
+### 2. Data Preparation
+
+In this step, the `trabalhadoresAPP_2020` dataframe is prepared. We will use the `Carga horária semanal habitual` column, ensuring it is numeric and filtering out any missing values. Then, we'll calculate the average weekly hours.
+
+```{r data_preparation_workload}
+# This code assumes that 'trabalhadoresAPP_2020' already exists in the environment.
+
+# Check if the column exists
+if (!"Carga horária semanal habitual" %in% names(trabalhadoresAPP_2020)) {
+  stop("ERROR: The 'Carga horária semanal habitual' column was not found in the dataframe.")
+}
+
+# Process the workload data
+workload_data <- trabalhadoresAPP_2020 %>%
+  # Rename for easier use and ensure it's numeric, coercing errors to NA
+  mutate(Work_Hours = as.numeric(`Carga horária semanal habitual`)) %>%
+  # Remove missing values and filter for a reasonable range of hours (e.g., up to 100)
+  filter(!is.na(Work_Hours) & Work_Hours <= 100)
+
+# Calculate the average weekly workload
+average_hours <- mean(workload_data$Work_Hours, na.rm = TRUE)
+
+# Display the prepared data summary
+print(paste("The average weekly workload is:", round(average_hours, 2), "hours."))
+print("Summary of workload data:")
+summary(workload_data$Work_Hours)
+```
+
+### 3. Chart: Histogram of Weekly Workload
+
+The histogram below shows the distribution of habitual weekly work hours. A vertical dashed line marks the average, and a highlighted band indicates the standard 40-44 hour work week for comparison.
+
+```{r histogram_plot_workload, fig.width=10, fig.height=7}
+workload_chart <- ggplot(workload_data, aes(x = Work_Hours)) +
+  # Add a rectangle to highlight the standard 40-44 hour work week
+  geom_rect(
+    aes(xmin = 40, xmax = 60, ymin = -Inf, ymax = Inf),
+    fill = "#fde29b", alpha = 0.02
+  ) +
+  geom_histogram(binwidth = 2, fill = "#1380A1", color = "white", alpha = 0.9) +
+  geom_vline(
+    aes(xintercept = average_hours),
+    color = "#e76f51",
+    linetype = "dashed",
+    size = 1
+  ) +
+  geom_hline(yintercept = 0, size = 1, colour = "#333333") +
+  # Annotation for the average
+  annotate(
+    "text",
+    x = average_hours + 15,
+    y = 3000,
+    label = paste("Average:", round(average_hours, 1), "hours/week"),
+    color = "#e76f51",
+    size = 4.5,
+    fontface = "bold"
+  ) +
+  # Annotation for the standard work week
+  annotate(
+    "text",
+    x = 81,
+    y = 3800,
+    label = "Workload of around 40 or 60 hours per week",
+    color = "#c7a759",
+    size = 4.5,
+    fontface = "bold"
+  ) +
+  labs(
+    title = "Workload Distribution of Platform Workers",
+    subtitle = "Most workers report a workload of around 40 or 60 hours per week",
+    x = "Habitual Weekly Work Hours",
+    y = "Number of Workers",
+    caption = "Source: PNAD-COVID19 Data (IBGE), 2020."
+  ) +
+  scale_x_continuous(breaks = seq(0, 100, by = 5)) +
+  # Theme inspired by the BBC R Cookbook
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(hjust = 0, size = 20, face = "bold", color = "#222222"),
+    plot.subtitle = element_text(hjust = 0, size = 16, margin = margin(t = 5, b = 20), color = "grey40"),
+    plot.caption = element_text(hjust = 1, size = 12, color = "grey40", face = "italic"),
+    panel.background = element_blank(),
+    panel.grid.major.y = element_line(color = "#cbcbcb", linetype = "dashed"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text = element_text(size = 12, color = "#333333"),
+    axis.title = element_text(size = 14, face = "bold"),
+    axis.title.x = element_text(margin = margin(t = 10))
+  )
+
+# Display the chart
+print(workload_chart)
+```
