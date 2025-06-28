@@ -1,0 +1,107 @@
+---
+title: "Analysis of Monthly Income of Platform Workers"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+    theme: united
+---
+
+### Introduction
+
+This notebook analyzes the habitual monthly income of platform workers based on the `trabalhadoresAPP_2020` dataset. A histogram will be generated to visualize the distribution of earnings.
+
+### 1. Load Libraries
+
+First, we load the necessary packages for data analysis and visualization.
+
+```{r setup, message=FALSE, warning=FALSE}
+library(tidyverse) # Contains ggplot2 for charts and dplyr for manipulation
+```
+
+### 2. Data Preparation
+
+In this step, the `trabalhadoresAPP_2020` dataframe is prepared. We will use the `Rendimentos habituais` column, ensuring it is numeric and filtering out any missing or extreme values. Then, we'll calculate the average monthly income.
+
+```{r data_preparation_income}
+# This code assumes that 'trabalhadoresAPP_2020' already exists in the environment.
+
+# Check if the column exists
+if (!"Rendimentos habituais" %in% names(trabalhadoresAPP_2020)) {
+  stop("ERROR: The 'Rendimentos habituais' column was not found in the dataframe.")
+}
+
+# Process the income data
+income_data <- trabalhadoresAPP_2020 %>%
+  # Rename for easier use and ensure it's numeric
+  mutate(Monthly_Income = as.numeric(`Rendimentos habituais`)) %>%
+  # Remove missing values and filter for a reasonable range to improve visualization
+  filter(!is.na(Monthly_Income) & Monthly_Income > 0 & Monthly_Income <= 10000)
+
+# Calculate the average monthly income
+average_income <- mean(income_data$Monthly_Income, na.rm = TRUE)
+
+# Define the minimum wage in Brazil for 2020 for context
+minimum_wage_2020 <- 1045
+
+# Display the prepared data summary
+print(paste("The average monthly income is: R$", round(average_income, 2)))
+print("Summary of monthly income data:")
+summary(income_data$Monthly_Income)
+```
+
+### 3. Chart: Histogram of Monthly Income
+
+The histogram below shows the distribution of habitual monthly income. A vertical dashed line marks the average income, and a solid red line indicates the Brazilian minimum wage in 2020 (R$1,045) for comparison.
+
+```{r histogram_plot_income, fig.width=10, fig.height=7}
+income_chart <- ggplot(income_data, aes(x = Monthly_Income)) +
+  geom_histogram(binwidth = 250, fill = "#1380A1", color = "white", alpha = 0.9) +
+  # Add a vertical line for the average income
+  geom_vline(
+    aes(xintercept = average_income, linetype = "Average Income"),
+    color = "#e76f51",
+    size = 1
+  ) +
+  # Add a vertical line for the 2020 minimum wage
+  geom_vline(
+    aes(xintercept = minimum_wage_2020, linetype = "Minimum Wage (2020)"),
+    color = "#E63946",
+    size = 1
+  ) +
+  geom_hline(yintercept = 0, size = 1, colour = "#333333") +
+  # Use scale_linetype_manual to create a custom legend for the vertical lines
+  scale_linetype_manual(
+    name = "Reference Lines",
+    values = c("Average Income" = "dashed", "Minimum Wage (2020)" = "solid"),
+    labels = c(paste("Average: R$", round(average_income, 0)), 
+               paste("Minimum Wage 2020: R$", minimum_wage_2020))
+  ) +
+  labs(
+    title = "Monthly Income Distribution of Platform Workers",
+    subtitle = "A significant portion of workers earns near or below the 2020 minimum wage",
+    x = "Habitual Monthly Income (R$)",
+    y = "Number of Workers",
+    caption = "Source: PNAD-COVID19 Data (IBGE), 2020."
+  ) +
+  scale_x_continuous(breaks = seq(0, 10000, by = 1000), labels = scales::dollar_format(prefix = "R$")) +
+  # Theme inspired by the BBC R Cookbook
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(hjust = 0, size = 20, face = "bold", color = "#222222"),
+    plot.subtitle = element_text(hjust = 0, size = 16, margin = margin(t = 5, b = 20), color = "grey40"),
+    plot.caption = element_text(hjust = 1, size = 12, color = "grey40", face = "italic"),
+    panel.background = element_blank(),
+    panel.grid.major.y = element_line(color = "#cbcbcb", linetype = "dashed"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text = element_text(size = 12, color = "#333333"),
+    axis.title = element_text(size = 14, face = "bold"),
+    axis.title.x = element_text(margin = margin(t = 10)),
+    legend.position = "top"
+  )
+
+# Display the chart
+print(income_chart)
+```
