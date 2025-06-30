@@ -141,10 +141,11 @@ The consolidated sample included **19,896 platform-based workers**, segmented as
 - Average monthly income: R$1,265
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/32c358f4-f5aa-43c9-8666-52d6a85ba007" />
 
+- 74.2% did not contribute to the INSS
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/79f35a2b-dc8d-46b3-987c-831a2d0c5cad" />
 
-- 74.5% did not contribute to the INSS
 
-These figures highlight the **informal, male-dominated, and racially marked nature of platform-based work** in Brazil. Most workers in this sector are not covered by social protections and work under precarious conditions.
+This findings highlight the **informal, male-dominated, and racially marked nature of platform-based work** in Brazil. Most workers in this sector are not covered by social protections and work under precarious conditions.
 
 ---
 
