@@ -2,6 +2,8 @@
 ## Leveraging Public Microdata and R to Uncover the Demographics and Working Conditions of Gig Economy Workers
 
 ---
+![https://www.pexels.com/pt-br/foto/estrada-via-homem-bicicleta-16184010/](https://images.pexels.com/photos/16184010/pexels-photo-16184010.jpeg)
+Photo by Bruno Saito no [Pexels](https://www.pexels.com/pt-br/foto/estrada-via-homem-bicicleta-16184010/)
 
 ## Introduction
 
