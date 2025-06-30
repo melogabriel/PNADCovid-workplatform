@@ -1,0 +1,103 @@
+---
+title: "Analysis of INSS Contribution of Platform Workers"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+    theme: united
+---
+
+### Introduction
+
+This notebook analyzes the social security (INSS) contribution status of platform workers based on the `trabalhadoresAPP_2020` dataset. A bar chart will be generated to visualize the proportion of workers who contribute versus those who do not.
+
+### 1. Load Libraries
+
+First, we load the necessary packages for data analysis and visualization.
+
+```{r setup, message=FALSE, warning=FALSE}
+library(tidyverse) # Contains ggplot2 for charts and dplyr for manipulation
+```
+
+### 2. Data Preparation
+
+In this step, the `trabalhadoresAPP_2020` dataframe is prepared. We will use the `Contribui para o INSS` column, translate its values to English, count the number of workers for each category, and calculate their percentage share.
+
+```{r data_preparation_inss}
+# This code assumes that 'trabalhadoresAPP_2020' already exists in the environment.
+
+# Check if the column exists
+if (!"Contribui para o INSS" %in% names(trabalhadoresAPP_2020)) {
+  stop("ERROR: The 'Contribui para o INSS' column was not found in the dataframe.")
+}
+
+# Process the INSS contribution data
+inss_data <- trabalhadoresAPP_2020 %>%
+  # Filter out missing values, which are coded as "Não aplicável"
+  filter(!is.na(`Contribui para o INSS`) & `Contribui para o INSS` != "Não aplicável") %>%
+  # Translate the categories to English
+  mutate(
+    Contribution_Status = case_when(
+      `Contribui para o INSS` == "Sim" ~ "Yes",
+      `Contribui para o INSS` == "Não" ~ "No"
+    )
+  ) %>%
+  # Count occurrences of each English category
+  count(Contribution_Status, name = "count") %>%
+  # Calculate the percentage for each level
+  mutate(
+    percentage = (count / sum(count)) * 100,
+    # Reorder the factor levels for a logical plot
+    Contribution_Status = fct_reorder(Contribution_Status, count)
+  )
+
+# Display the prepared data
+print("INSS contribution data ready for analysis:")
+print(inss_data)
+```
+
+### 3. Chart: Bar Chart of INSS Contribution
+
+The bar chart below shows the number of workers by their INSS contribution status. This visualization highlights the significant proportion of platform workers who do not contribute to the social security system.
+
+```{r barchart_plot_inss, fig.width=10, fig.height=7}
+inss_chart <- ggplot(inss_data, aes(x = Contribution_Status, y = count)) +
+  # Use geom_col for pre-counted data
+  geom_col(fill = "#1380A1", alpha = 0.9, width = 0.5) +
+  # Add text labels for the percentage on top of each bar
+  geom_text(
+    aes(label = paste0(round(percentage, 1), "%")),
+    vjust = -0.5, # Position text above the bar
+    size = 5,
+    color = "#333333",
+    fontface = "bold"
+  ) +
+  geom_hline(yintercept = 0, size = 1, colour = "#333333") +
+  # Adjust the y-axis limit to make space for the labels
+  scale_y_continuous(limits = c(0, max(inss_data$count) * 1.1)) +
+  labs(
+    title = "Distribution of workers by social security contribution status",
+    subtitle = "Vast Majority of Platform Workers Do Not Contribute to INSS",
+    x = "Contributes to INSS?",
+    y = "Number of Workers",
+    caption = "Source: PNAD-COVID19 Data (IBGE), 2020"
+  ) +
+  # Theme inspired by the BBC R Cookbook
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(hjust = 0, size = 20, face = "bold", color = "#222222"),
+    plot.subtitle = element_text(hjust = 0, size = 16, margin = margin(t = 5, b = 20), color = "grey40"),
+    plot.caption = element_text(hjust = 1, size = 12, color = "grey40", face = "italic"),
+    panel.background = element_blank(),
+    panel.grid.major.y = element_line(color = "#cbcbcb", linetype = "dashed"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text = element_text(size = 12, color = "#333333"),
+    axis.title = element_text(size = 14, face = "bold"),
+    axis.title.x = element_text(margin = margin(t = 10))
+  )
+
+# Display the chart
+print(inss_chart)
+```
