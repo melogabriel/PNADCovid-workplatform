@@ -79,7 +79,7 @@ histograma_idade <- ggplot(idade_data, aes(x = Idade)) +
   ) +
   labs(
     title = "Distribution of Platform-based workers by Age",
-    subtitle = "Most of the workers are between 30 and 40 years old.",
+    subtitle = "Most of the workers are between 30 and 40 years old",
     x = "Age (years)",
     y = "Number of Workers",
     caption = "Source: PNAD-COVID19 Data (IBGE), 2020."
