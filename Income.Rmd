@@ -79,7 +79,7 @@ income_chart <- ggplot(income_data, aes(x = Monthly_Income)) +
   ) +
   labs(
     title = "Monthly Income Distribution of Platform Workers",
-    subtitle = "A significant portion of workers earns near or below the 2020 minimum wage",
+    subtitle = "A significant portion of workers earns near or below the 2020 minimum wage.",
     x = "Habitual Monthly Income (R$)",
     y = "Number of Workers",
     caption = "Source: PNAD-COVID19 Data (IBGE), 2020."
