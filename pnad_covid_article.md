@@ -133,18 +133,19 @@ The consolidated sample included **19,896 platform-based workers**, segmented as
 <img width="915" alt="image" src="https://github.com/user-attachments/assets/05318545-1d9d-4615-b10c-d74010a0a2d6" />
   
 - 62% of workers have, at most, a complete high school education
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/f2acd8cb-e8bf-4276-a78a-7506174ab2fb" />
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/cf5ec9a0-671d-4e95-af3c-e2b9fdfeaff5" />
 
 **Work Conditions:**
 
 - Average workweek: 42.3 hours
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/77ca6a45-7253-4899-8d8d-f3d0c9c0c49a" />
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/81c6ef35-b6cd-4c7a-b3a4-d392e869ad8d" />
 
 - Average monthly income: R$1,265
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/32c358f4-f5aa-43c9-8666-52d6a85ba007" />
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/15cb1714-2cfd-461d-a4de-5eb32fb22422" />
 
 - 74.2% did not contribute to the INSS
-<img width="915" alt="image" src="https://github.com/user-attachments/assets/79f35a2b-dc8d-46b3-987c-831a2d0c5cad" />
+<img width="915" alt="image" src="https://github.com/user-attachments/assets/37650ee6-9c9f-44f4-a15e-2b1eb6a1dad9" />
+
 
 
 This findings highlight the **informal, male-dominated, and racially marked nature of platform-based work** in Brazil. Most workers in this sector are not covered by social protections and work under precarious conditions.
