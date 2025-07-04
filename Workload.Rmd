@@ -88,7 +88,7 @@ workload_chart <- ggplot(workload_data, aes(x = Work_Hours)) +
   ) +
   labs(
     title = "Workload Distribution of Platform Workers",
-    subtitle = "Most workers report a workload of around 40 or 60 hours per week",
+    subtitle = "Most workers report a workload of around 40 or 60 hours per week.",
     x = "Habitual Weekly Work Hours",
     y = "Number of Workers",
     caption = "Source: PNAD-COVID19 Data (IBGE), 2020."

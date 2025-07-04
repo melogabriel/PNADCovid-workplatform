@@ -77,7 +77,7 @@ inss_chart <- ggplot(inss_data, aes(x = Contribution_Status, y = count)) +
   scale_y_continuous(limits = c(0, max(inss_data$count) * 1.1)) +
   labs(
     title = "Distribution of workers by social security contribution status",
-    subtitle = "Vast Majority of Platform Workers Do Not Contribute to INSS",
+    subtitle = "Vast Majority of Platform Workers Do Not Contribute to INSS.",
     x = "Contributes to INSS?",
     y = "Number of Workers",
     caption = "Source: PNAD-COVID19 Data (IBGE), 2020"
