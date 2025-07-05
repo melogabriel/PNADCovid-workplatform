@@ -1,5 +1,6 @@
-# Analyzing Platform-Based Work in Brazil During COVID-19 Using PNAD COVID-19 Microdata
-## Leveraging Public Microdata and R to Uncover the Demographics and Working Conditions of Gig Economy Workers
+# The Precarious Reality of Platform Work: A Deep Dive into Brazil's Gig Economy During the Pandemic
+
+### Using R and public microdata to uncover the demographics, income, and working conditions of over 19,000 app-based drivers and delivery workers.
 
 ---
 ![https://www.pexels.com/pt-br/foto/estrada-via-homem-bicicleta-16184010/](https://images.pexels.com/photos/16184010/pexels-photo-16184010.jpeg)
@@ -7,9 +8,12 @@ Photo by Bruno Saito no [Pexels](https://www.pexels.com/pt-br/foto/estrada-via-h
 
 ## Introduction
 
-Platform-based work has been expanding rapidly across the globe, creating new forms of labor relations. In Brazil, delivery drivers and app-based transportation workers have become highly visible in urban centers, especially during the COVID-19 pandemic when demand for delivery services surged. However, access to detailed data about these workers remains limited, particularly from the companies themselves.
+
+Platform-based work has been expanding rapidly across the globe, creating new forms of labor relations. During the COVID-19 pandemic, city streets in Brazil became dominated by a new, essential workforce: app-based drivers and delivery workers. While demand for their services surged, the reality of their working lives remained largely invisible, hidden behind corporate platforms. Who are these workers? What are their working conditions? And what does their reality tell us about the future of work?
 
 To address this information gap, researchers have turned to demographic surveys that can represent platform workers at scale. This project utilizes [**PNAD COVID-19**](https://www.ibge.gov.br/estatisticas/sociais/saude/27946-divulgacao-semanal-pnadcovid1.html?=&t=o-que-e), a special edition of Brazil's National Household Sample Survey conducted during the pandemic, to analyze the profile and working conditions of gig economy workers.
+
+By analyzing the microdata of **19,896 platform workers** from May to November 2020, we can paint a clear, data-driven picture of the gig economy in Brazil.
 
 ---
 
@@ -25,6 +29,32 @@ In this study:
 The analysis focused on workers who reported being **self-employed** or working in the private sector **without formal contracts**, reflecting the informal nature of most platform jobs in Brazil.
 
 ---
+## Project Structure and Reproducibility
+
+### System Requirements
+
+- R version 4.0 or higher
+- Required R packages: `tidyverse`, `PNADcIBGE`, `COVIDIBGE`, `knitr`, `gridExtra`, `ggrepel`, `survey`, `zoo`, `scales`, `srvyr`
+
+### Installation
+
+```bash
+git clone https://github.com/melogabriel/PNADCovid-workplatform.git
+cd PNADCovid-workplatform
+```
+
+Install the required packages:
+
+```r
+install.packages(c("tidyverse", "PNADcIBGE", "COVIDIBGE", "knitr", "gridExtra", "ggrepel", "survey", "zoo", "scales", "srvyr"))
+```
+
+### Usage
+
+- Open the file `PNADCovid_TrabalhadoresAPP.Rmd` in RStudio.
+- Run the notebook to process and analyze the data.
+- The results will be displayed in an automatically generated HTML report.
+
 
 ## Methodology
 
@@ -152,44 +182,20 @@ This findings highlight the **informal, male-dominated, and racially marked natu
 
 ---
 
-## Project Structure and Reproducibility
 
-### System Requirements
+## Final Thoughts: Data as a Tool for Visibility
 
-- R version 4.0 or higher
-- Required R packages: `tidyverse`, `PNADcIBGE`, `COVIDIBGE`, `knitr`, `gridExtra`, `ggrepel`, `survey`, `zoo`, `scales`, `srvyr`
+The gig economy is often presented as a modern, innovative, and flexible way to work. However, a detailed, large-scale data analysis tells a different story: one of long hours, low pay, and a profound lack of social protection. The profile of these workers—predominantly male, Black or Brown, with limited formal education—highlights systemic inequalities that extend into these new forms of labor.
 
-### Installation
-
-```bash
-git clone https://github.com/melogabriel/PNADCovid-workplatform.git
-cd PNADCovid-workplatform
-```
-
-Install the required packages:
-
-```r
-install.packages(c("tidyverse", "PNADcIBGE", "COVIDIBGE", "knitr", "gridExtra", "ggrepel", "survey", "zoo", "scales", "srvyr"))
-```
-
-### Usage
-
-- Open the file `PNADCovid_TrabalhadoresAPP.Rmd` in RStudio.
-- Run the notebook to process and analyze the data.
-- The results will be displayed in an automatically generated HTML report.
-
+By combining public microdata and open-source tools, we can move beyond anecdotes and bring a new level of transparency to the platform economy. This approach is fully reproducible and provides a solid foundation for researchers, policymakers, and the public to understand the true dimensions and social impacts of this growing workforce. In this way, it hopes to contribute with ways of obtaining information about this new form of work that is still little known in terms of its dimensions and social impacts.
 
 ---
 
-## Academic Reference and License
+## Academic Reference, Code and Contact
 
 This project is part of the author’s master's dissertation:
 
 > MELO, Gabriel Coutinho. *Plataformização do trabalho no Brasil: uma análise das suas origens e condicionantes*. 2024. 103 f. Master's Dissertation — Universidade Federal Fluminense. [Access the dissertation here.](https://app.uff.br/riuff/handle/1/36524)
 
----
-
-## Final Thoughts
-
-By combining public microdata, statistical rigor and open-source tools, this project provides a detailed look into the precarious reality of platform-based work in Brazil. The approach is fully reproducible and can serve as a foundation for future research into labor market dynamics and the gig economy.In this way, it hopes to contribute with ways of obtaining information about this new form of work that is still little known in terms of its dimensions and social impacts.
+The codes are available on my [Github](https://github.com/melogabriel/PNADCovid-workplatform). You can also find me on [LinkedIn](https://www.linkedin.com/in/gabriel-melo/).
 
