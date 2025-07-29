@@ -1,6 +1,6 @@
 ---
 layout: default
-title: The Precarious Reality of Platform Work: A Deep Dive into Brazil's Gig Economy During the Pandemic
+title: The Precarious Reality of Platform Work into Brazil's Gig Economy During the Pandemic
 permalink: /pnad-covid-article/
 ---
 
