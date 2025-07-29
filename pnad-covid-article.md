@@ -1,5 +1,10 @@
-# The Precarious Reality of Platform Work: A Deep Dive into Brazil's Gig Economy During the Pandemic
+---
+layout: default
+title: O Acesso à internet e a plataformização do trabalho no Brasil
+permalink: /pnad-covid-article/
+---
 
+# The Precarious Reality of Platform Work: A Deep Dive into Brazil's Gig Economy During the Pandemic
 ### Using R and public microdata to uncover the demographics, income, and working conditions of over 19,000 app-based drivers and delivery workers.
 
 ---
