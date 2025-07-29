@@ -1,6 +1,6 @@
 ---
 layout: default
-title: O Acesso à internet e a plataformização do trabalho no Brasil
+title: The Precarious Reality of Platform Work: A Deep Dive into Brazil's Gig Economy During the Pandemic
 permalink: /pnad-covid-article/
 ---
 
